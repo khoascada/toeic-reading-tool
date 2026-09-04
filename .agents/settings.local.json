@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(ls \"d:\\\\KHOA\\\\Work\\\\study_and_test\\\\magic\\\\EE\" | Where-Object {$_.PSIsContainer})",
+      "PowerShell(ls \"d:\\\\KHOA\\\\Work\\\\study_and_test\\\\magic\\\\EE\\\\features\" | Where-Object {$_.PSIsContainer} | Select-Object Name)",
+      "Bash(Get-ChildItem -Path \"d:\\\\KHOA\\\\Work\\\\study_and_test\\\\magic\\\\EE\\\\features\\\\\" -Directory | Select-Object -ExpandProperty Name)"
+    ]
+  }
+}

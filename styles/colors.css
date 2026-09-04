@@ -1,0 +1,183 @@
+/* Custom color definitions for TailwindCSS v4 */
+/* These colors can be used with utilities like: bg-primary, text-texthead, border-gray-200, etc. */
+
+:root {
+  /* Light mode colors */
+  --background: oklch(0.98 0.003 218);
+  --foreground: oklch(0.16 0.01 218);
+  --card: oklch(1 0 0);
+  --card-border: oklch(0.92 0.008 218);
+  --card-foreground: oklch(0.16 0.01 218);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.01 218);
+
+  --primary: oklch(0.64 0.16 238);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.628 0.225 27.65);
+  --secondary-foreground: oklch(1 0 0);
+
+  --error: oklch(0.53 0.2 25);
+  --warning: oklch(0.65 0.18 55);
+  --info: oklch(0.55 0.14 230);
+  --success: oklch(0.5 0.14 145);
+  --streak: oklch(42.647% 0.16987 30.226);
+
+  --text-primary: oklch(0.16 0.01 218);
+  --text-secondary: oklch(0.45 0.01 218);
+  --text-disabled: oklch(0.65 0.008 218);
+
+  /* Other colors */
+  --muted: oklch(0.95 0.008 218);
+  --muted-foreground: oklch(0.55 0.01 218);
+  --accent: oklch(0.95 0.008 218);
+  --accent-foreground: oklch(0.16 0.01 218);
+  --destructive: oklch(0.59 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --accent-hover: oklch(0.93 0 0);
+  --border: oklch(0.9 0.008 218);
+  --divider: oklch(0.9 0.008 218);
+  --input: oklch(0.9 0.008 218);
+}
+
+.dark {
+  /* Dark mode colors */
+  --background: oklch(0.12 0.015 218);
+  --foreground: oklch(0.95 0.005 218);
+  --card: oklch(0.16 0.015 218);
+  --card-border: oklch(0.24 0.015 218);
+  --card-foreground: oklch(0.95 0.005 218);
+  --popover: oklch(0.16 0.015 218);
+  --popover-foreground: oklch(0.95 0.005 218);
+
+  /* Primary colors  */
+  --primary: oklch(0.64 0.16 238);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Secondary colors */
+  --secondary: oklch(0.628 0.225 27.65);
+  --secondary-foreground: oklch(1 0 0);
+
+  /* Semantic colors */
+  --error: oklch(0.704 0.191 22.216);
+  --warning: oklch(0.78 0.14 65);
+  --info: oklch(0.72 0.12 230);
+  --success: oklch(0.7 0.13 145);
+  --streak: oklch(62.041% 0.22139 31.004);
+
+  /* Text colors */
+  --text-primary: oklch(0.95 0.005 218);
+  --text-secondary: oklch(0.75 0.01 218);
+  --text-disabled: oklch(0.5 0.01 218);
+
+  /* Other colors */
+  --muted: oklch(0.2 0.015 218);
+  --muted-foreground: oklch(0.7 0.01 218);
+  --accent: oklch(0.2 0.015 218);
+  --accent-foreground: oklch(0.95 0.005 218);
+  --destructive: oklch(0.59 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.24 0.015 218);
+  --divider: oklch(0.24 0.015 218);
+  --input: oklch(0.24 0.015 218);
+}
+
+@theme inline {
+  /* Base colors - mapped from CSS variables */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Primary colors */
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: oklch(0.35 0.14 255);
+
+  /* Secondary colors */
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Semantic colors */
+  --color-error: var(--error);
+  --color-error-light: var(--error-light);
+  --color-error-dark: var(--error-dark);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-warning-dark: var(--warning-dark);
+  --color-info: var(--info);
+  --color-info-light: var(--info-light);
+  --color-info-dark: var(--info-dark);
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-success-dark: var(--success-dark);
+  --color-streak: var(--streak);
+  --color-streak-light: var(--streak-light);
+  --color-streak-dark: var(--streak-dark);
+
+  /* Text colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
+  --color-text-title: oklch(0.35 0.02 250);
+  --color-texthead: oklch(0.45 0.18 25);
+
+  /* Other colors */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-hover: var(--accent-hover);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-divider: var(--divider);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Gray Scale */
+  --color-gray-50: oklch(0.985 0 0);
+  --color-gray-100: oklch(0.97 0 0);
+  --color-gray-200: oklch(0.93 0 0);
+  --color-gray-300: oklch(0.87 0 0);
+  --color-gray-400: oklch(0.7 0.015 250);
+  --color-gray-500: oklch(0.55 0.02 250);
+  --color-gray-600: oklch(0.45 0.02 250);
+  --color-gray-700: oklch(0.37 0.015 250);
+  --color-gray-800: oklch(0.28 0.015 250);
+  --color-gray-900: oklch(0.21 0.01 250);
+
+  /* Slate Scale */
+  --color-slate-50: oklch(0.984 0.003 247);
+  --color-slate-100: oklch(0.968 0.007 247);
+  --color-slate-200: oklch(0.929 0.013 255);
+  --color-slate-300: oklch(0.869 0.022 252);
+  --color-slate-400: oklch(0.704 0.04 256);
+  --color-slate-500: oklch(0.554 0.046 257);
+  --color-slate-600: oklch(0.446 0.043 257);
+  --color-slate-700: oklch(0.372 0.044 257);
+  --color-slate-800: oklch(0.279 0.041 260);
+  --color-slate-900: oklch(0.208 0.042 265);
+  --color-slate-950: oklch(0.129 0.042 264);
+
+  /* Additional Semantic Colors */
+  --color-remind: oklch(0.98 0.03 70);
+  --color-border-remind: oklch(0.88 0.08 70);
+  --color-mark: oklch(0.7 0.18 45);
+  --color-select: oklch(0.62 0.16 245);
+  --color-danger: oklch(0.59 0.22 25);
+
+  /* Action Colors */
+  --color-add: oklch(0.62 0.17 255);
+  --color-edit: oklch(0.7 0.18 45);
+  --color-delete: oklch(0.59 0.22 25);
+  --color-save: oklch(0.67 0.17 145);
+  --color-cancel: oklch(0.55 0.02 250);
+}

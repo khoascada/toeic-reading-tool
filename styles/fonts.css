@@ -1,0 +1,23 @@
+/* Custom font family definitions for TailwindCSS v4 */
+/* These fonts can be used with utilities like: font-heading, font-body, font-vn, etc. */
+
+@theme {
+  /* Main Application Fonts */
+  --font-family-heading: 'Playfair Display', serif;
+  --font-family-body: 'Inter', sans-serif;
+  --font-family-primary: 'Inter', sans-serif;
+  --font-family-login: 'Montserrat', sans-serif;
+  --font-family-vn: 'Be Vietnam Pro', sans-serif;
+
+  /* Additional Fonts */
+  --font-family-code: 'Fira Code', monospace; /* cho code, terminal */
+  --font-family-button: 'Poppins', sans-serif; /* cho nút bấm nổi bật */
+  --font-family-accent: 'Lora', serif; /* cho quote, highlight */
+  --font-family-mono: 'Source Code Pro', monospace; /* font monospace thay thế */
+  --font-family-alt: 'Roboto Slab', serif; /* font thay thế khi cần */
+
+  /* System Fonts */
+  --font-apple:
+    -apple-system, 'Segoe UI', BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+    'Helvetica Neue', sans-serif;
+}

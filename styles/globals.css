@@ -1,0 +1,146 @@
+@import 'tailwindcss';
+@import 'driver.js/dist/driver.css';
+@import './colors.css';
+@import './fonts.css';
+
+@plugin 'tailwindcss-animate';
+
+@source '../app/**/*.{js,jsx,ts,tsx}';
+@source '../components/**/*.{js,jsx,ts,tsx}';
+
+@custom-variant dark (&:is(.dark *));
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-size: 14px;
+  --radius: 0.8rem;
+}
+
+@theme {
+  --font-family-sans: var(--font-family-apple);
+  --font-family-geist-sans: var(--font-geist-sans);
+  --font-family-geist-mono: var(--font-geist-mono);
+
+  --animate-flame-flicker: flame-flicker 1.2s ease-in-out infinite;
+
+  @keyframes flame-flicker {
+    0%,
+    100% {
+      transform: scale(1) rotate(-1deg);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.08) rotate(1.5deg);
+      opacity: 0.9;
+    }
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scrollbar-width: thin;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  ul,
+  ol,
+  dl,
+  dd,
+  figure,
+  fieldset,
+  legend {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+body {
+  font-family: var(--font-apple), system-ui, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+code,
+pre {
+  font-family: var(--font-family-geist-mono), monospace;
+}
+
+input.input-autofill:-webkit-autofill,
+input.input-autofill:-webkit-autofill:hover,
+input.input-autofill:-webkit-autofill:focus,
+input.input-autofill:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--background) inset !important;
+  -webkit-text-fill-color: #1f2328 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Ẩn icon eye/clear mặc định của Edge/IE trên input password — tránh đúp với nút toggle tự custom (PasswordInput) */
+input[type='password']::-ms-reveal,
+input[type='password']::-ms-clear {
+  display: none;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* scrollbar */
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent;
+}

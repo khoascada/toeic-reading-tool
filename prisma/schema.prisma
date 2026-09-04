@@ -1,0 +1,200 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum QuestionType {
+  // Part 5 & 6 - Grammar/Vocabulary
+  WORD_FORM        // chọn dạng từ đúng (noun/verb/adj/adv)
+  VERB_TENSE       // thì động từ
+  VERB_FORM        // dạng động từ (gerund, infinitive,...)
+  CONJUNCTION      // liên từ (although, however, therefore,...)
+  PREPOSITION      // giới từ (in, on, at, by,...)
+  PRONOUN          // đại từ (he, his, him,...)
+  VOCABULARY       // chọn từ đúng nghĩa theo ngữ cảnh
+
+  // Part 6 only
+  SENTENCE_INSERT  // chọn câu phù hợp điền vào chỗ trống
+
+  // Part 7 - Reading Comprehension
+  MAIN_IDEA        // ý chính của đoạn văn
+  DETAIL           // chi tiết cụ thể trong bài
+  INFERENCE        // suy luận, không nói thẳng trong bài
+  VOCABULARY_CONTEXT // nghĩa từ theo ngữ cảnh bài đọc
+  WRITER_PURPOSE   // mục đích tác giả viết bài
+  NOT_MENTIONED    // NOT true / NOT mentioned
+}
+
+enum ReadingSkill {
+  // Hiểu nội dung
+  SCANNING         // tìm thông tin cụ thể nhanh (số, tên, ngày tháng)
+  SKIMMING         // nắm ý chính toàn bài nhanh
+  DETAIL_READING   // đọc kỹ để lấy chi tiết chính xác
+
+  // Suy luận
+  INFERENCE        // suy ra thông tin không nói thẳng
+  IMPLICATION      // hiểu ý tác giả muốn nói ngầm
+
+  // Từ vựng trong ngữ cảnh
+  VOCAB_IN_CONTEXT // đoán nghĩa từ qua ngữ cảnh xung quanh
+
+  // Cấu trúc văn bản
+  TEXT_STRUCTURE   // hiểu cách tổ chức bài (email, memo, notice,...)
+  REFERENCE        // xác định từ/cụm từ refer về cái gì (it, they, this,...)
+
+  // Cross-reference (Part 7 double/triple passage)
+  SYNTHESIS        // kết hợp thông tin từ nhiều đoạn văn khác nhau
+}
+
+enum RoleChat {
+  USER
+  ASSISTANT
+}
+
+
+model Passage {
+  id Int @id @default(autoincrement())
+  part Int
+  passage_text String?
+  is_study Boolean
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  questions Question[]
+  passage_analysis PassageAnalysis?
+  vocabulary Vocabulary[]
+  passage_attempts PassageAttempt[]
+}
+
+model Question {
+  id Int @id @default(autoincrement())
+  id_passage Int
+  question_number Int
+  question_text String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  answers Answer[]
+  passage Passage @relation(fields: [id_passage], references: [id])
+  question_analysis QuestionAnalysis?
+  question_attempts QuestionAttempt[]
+  chat_ai_histories ExplainChat[]
+}
+
+model Answer {
+  id Int @id @default(autoincrement())
+  id_question Int
+  answer_number Int
+  answers_text String?
+  is_correct Boolean
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  question Question @relation(fields: [id_question], references: [id])
+  question_attempts QuestionAttempt[]
+}
+
+model PassageAnalysis {
+  id Int @id @default(autoincrement())
+  id_passage Int @unique
+  summary String // Tóm tắt nội dung chính
+  main_idea String // Ý chính
+  topic String // Chủ đề
+  structure Json // Cấu trúc đoạn văn
+  paragraph_analysis Json // Phân tích từng đoạn
+  reading_strategy Json // Chiến lược làm bài
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  passage Passage @relation(fields: [id_passage], references: [id])
+}
+
+model QuestionAnalysis {
+  id Int @id @default(autoincrement())
+  id_question Int @unique
+  // Classification
+  question_type        QuestionType
+  skill                ReadingSkill?
+
+  // Explanation
+  explanation          String // Giải thích
+  distractor_analysis  Json // Giải thích các đáp án sai
+  evidence             Json? // Bằng chứng trong bài
+
+  // Coaching
+  solving_strategy     Json // Chiến lược làm bài
+  
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  question Question @relation(fields: [id_question], references: [id])
+}
+
+
+model Vocabulary {
+  id Int @id @default(autoincrement())
+  id_passage Int 
+  word String
+  part_of_speech String // Loại từ (n, v, adj, adv)
+  meaning String
+  analysis Json
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  passage Passage @relation(fields: [id_passage], references: [id])
+}
+
+// tracking
+model PassageAttempt {
+  id Int @id @default(autoincrement())
+  id_passage Int 
+
+  started_at DateTime @default(now())
+  completed_at DateTime?
+
+  passage Passage @relation(fields: [id_passage], references: [id])
+  question_attempts QuestionAttempt[]
+
+}
+
+model QuestionAttempt {
+  id Int @id @default(autoincrement())
+  id_passage_attempt Int
+  id_question Int
+
+  started_at DateTime @default(now())
+  completed_at DateTime?
+
+  is_correct Boolean
+  id_selected_answer Int
+  
+  selected_answer Answer @relation(fields: [id_selected_answer], references: [id])
+  passage_attempt PassageAttempt @relation(fields: [id_passage_attempt], references: [id])
+  question Question @relation(fields: [id_question], references: [id])
+}
+
+model ExplainChat {
+  id Int @id @default(autoincrement())
+  id_question Int
+
+  text String
+  role RoleChat
+
+  created_at DateTime @default(now())
+
+  question Question @relation(fields: [id_question], references: [id])
+}

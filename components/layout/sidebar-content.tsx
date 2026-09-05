@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { BookOpen, Library, BookMarked, History, BarChart2 } from 'lucide-react';
+import { BookOpen, Library, BookMarked, History, BarChart2, Book } from 'lucide-react';
 import ThemeToggle from '@components/shared/theme-toggle';
 
 interface MenuItem {
@@ -20,30 +20,20 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ onNavigate }) =>
 
   const menu: MenuItem[] = [
     {
-      label: 'Bài đọc (Passages)',
+      label: 'Part 5',
       icon: <BookOpen size={18} />,
-      path: '/passages',
+      path: '/part-5',
     },
     {
-      label: 'Bộ đề (Tests)',
-      icon: <Library size={18} />,
-      path: '/tests',
+      label: 'Part 6',
+      icon: <Book size={18} />,
+      path: '/part-6',
     },
     {
-      label: 'Sổ từ vựng (Vocab)',
+      label: 'Part 7',
       icon: <BookMarked size={18} />,
-      path: '/vocabulary',
-    },
-    {
-      label: 'Lịch sử làm bài',
-      icon: <History size={18} />,
-      path: '/attempts',
-    },
-    {
-      label: 'Thống kê & Tiến độ',
-      icon: <BarChart2 size={18} />,
-      path: '/analytics',
-    },
+      path: '/part-7',
+    }
   ];
 
   const handleNavigation = (path: string) => {

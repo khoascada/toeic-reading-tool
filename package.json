@@ -13,6 +13,7 @@
     "type-check": "next typegen && tsc --noEmit",
     "format": "prettier --write \"{app,components,lib,styles}/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "seed": "tsx scripts/seed.ts",
+    "clean": "tsx scripts/clean-db.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest",

@@ -34,6 +34,9 @@
       "@services/*": [
         "./services/*"
       ],
+      "@repositories/*": [
+        "./repositories/*"
+      ],
       "@store/*": [
         "./features/UI/store/*"
       ],

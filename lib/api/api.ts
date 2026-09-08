@@ -67,8 +67,7 @@ api.interceptors.response.use(
     // Case 1: Server có trả về response (HTTP 4xx, 5xx)
     if (error.response) {
       const contentType = error.response.headers['content-type'];
-      const isHtmlResponse =
-        typeof contentType === 'string' && contentType.includes('text/html');
+      const isHtmlResponse = typeof contentType === 'string' && contentType.includes('text/html');
 
       let apiError: ApiError;
 

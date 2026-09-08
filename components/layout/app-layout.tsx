@@ -23,9 +23,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
           <div className="bg-primary text-primary-foreground flex h-7 w-7 items-center justify-center rounded-lg text-sm font-bold shadow-sm">
             T
           </div>
-          <span className="text-foreground text-base font-bold tracking-tight">
-            TOEIC Reading
-          </span>
+          <span className="text-foreground text-base font-bold tracking-tight">TOEIC Reading</span>
         </div>
 
         <Button

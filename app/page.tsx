@@ -34,27 +34,32 @@ export default function HomePage() {
     <div className="container mx-auto max-w-5xl px-4 py-8 md:py-12">
       {/* Welcome Banner */}
       <div className="bg-primary/10 border-primary/20 mb-8 rounded-2xl border p-6 md:p-8">
-        <div className="flex items-center gap-2 text-sm font-semibold text-primary mb-2">
+        <div className="text-primary mb-2 flex items-center gap-2 text-sm font-semibold">
           <Sparkles className="h-4 w-4" />
           <span>TOEIC Reading Mastery Platform</span>
         </div>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+        <h1 className="text-foreground text-2xl font-bold tracking-tight md:text-3xl">
           Chào mừng bạn đến với TOEIC Reading Tool
         </h1>
         <p className="text-muted-foreground mt-2 max-w-2xl text-sm md:text-base">
-          Hệ thống hỗ trợ luyện đọc TOEIC kết hợp AI phân tích chiến lược làm bài, giải thích đáp án sai và trích xuất từ vựng trọng tâm.
+          Hệ thống hỗ trợ luyện đọc TOEIC kết hợp AI phân tích chiến lược làm bài, giải thích đáp án
+          sai và trích xuất từ vựng trọng tâm.
         </p>
       </div>
 
       {/* Quick Access Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
         {quickActions.map((action, idx) => (
-          <Link key={idx} href={action.href} className="group transition-transform hover:-translate-y-0.5">
-            <Card className="h-full border-border/60 transition-colors group-hover:border-primary/50 group-hover:shadow-sm">
+          <Link
+            key={idx}
+            href={action.href}
+            className="group transition-transform hover:-translate-y-0.5"
+          >
+            <Card className="border-border/60 group-hover:border-primary/50 h-full transition-colors group-hover:shadow-sm">
               <CardHeader className="flex flex-row items-center gap-4 pb-2">
                 <div className="bg-primary/10 rounded-xl p-2.5">{action.icon}</div>
                 <div>
-                  <CardTitle className="text-base font-semibold group-hover:text-primary transition-colors">
+                  <CardTitle className="group-hover:text-primary text-base font-semibold transition-colors">
                     {action.title}
                   </CardTitle>
                 </div>

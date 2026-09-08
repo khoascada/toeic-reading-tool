@@ -7,9 +7,11 @@ export default function Part5PracticePage() {
     <main className="min-h-screen pb-16">
       <Suspense
         fallback={
-          <div className="container mx-auto max-w-4xl px-4 py-20 flex flex-col items-center justify-center min-h-[450px]">
-            <Loader2 className="h-10 w-10 animate-spin text-primary mb-4" />
-            <p className="text-xs text-muted-foreground font-medium">Đang tải giao diện luyện tập...</p>
+          <div className="container mx-auto flex min-h-[450px] max-w-4xl flex-col items-center justify-center px-4 py-20">
+            <Loader2 className="text-primary mb-4 h-10 w-10 animate-spin" />
+            <p className="text-muted-foreground text-xs font-medium">
+              Đang tải giao diện luyện tập...
+            </p>
           </div>
         }
       >

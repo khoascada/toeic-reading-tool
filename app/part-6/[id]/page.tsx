@@ -14,9 +14,9 @@ export default async function Part6PracticePage({ params }: Part6PracticePagePro
     <main className="min-h-screen pb-12">
       <Suspense
         fallback={
-          <div className="container mx-auto max-w-5xl px-4 py-20 flex flex-col items-center justify-center min-h-[450px]">
-            <Loader2 className="h-9 w-9 animate-spin text-primary mb-3" />
-            <p className="text-sm font-medium text-muted-foreground">Đang tải đoạn văn Part 6...</p>
+          <div className="container mx-auto flex min-h-[450px] max-w-5xl flex-col items-center justify-center px-4 py-20">
+            <Loader2 className="text-primary mb-3 h-9 w-9 animate-spin" />
+            <p className="text-muted-foreground text-sm font-medium">Đang tải đoạn văn Part 6...</p>
           </div>
         }
       >
@@ -25,4 +25,3 @@ export default async function Part6PracticePage({ params }: Part6PracticePagePro
     </main>
   );
 }
-

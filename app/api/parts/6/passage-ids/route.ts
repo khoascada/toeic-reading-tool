@@ -16,6 +16,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ids, total: ids.length });
   } catch (error) {
     console.error('Error fetching Part 6 passage IDs:', error);
-    return NextResponse.json({ message: 'Lỗi khi lấy danh sách ID đoạn văn Part 6' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Lỗi khi lấy danh sách ID đoạn văn Part 6' },
+      { status: 500 }
+    );
   }
 }

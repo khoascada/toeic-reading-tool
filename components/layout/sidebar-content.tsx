@@ -33,7 +33,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ onNavigate }) =>
       label: 'Part 7',
       icon: <BookMarked size={18} />,
       path: '/part-7',
-    }
+    },
   ];
 
   const handleNavigation = (path: string) => {

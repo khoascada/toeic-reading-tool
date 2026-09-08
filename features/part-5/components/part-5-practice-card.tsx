@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Part5QuestionItem, DistractorItem, SolvingStrategy, EvidenceInfo } from '../types';
+import { Part5QuestionItem, SolvingStrategy, EvidenceInfo } from '../types';
 import { Part5TypeBadge } from './part-5-type-badge';
 import { Card, CardContent, CardHeader } from '@components/ui/card';
 import { Button } from '@components/ui/button';
@@ -11,8 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   Lightbulb,
-  BookOpen,
-  AlertCircle,
+  Languages,
 } from 'lucide-react';
 
 interface Part5PracticeCardProps {
@@ -44,7 +43,6 @@ export const Part5PracticeCard: React.FC<Part5PracticeCardProps> = ({
   const analysis = question.question_analysis;
   const isAnswered = selectedAnswerId !== undefined;
 
-  const distractorAnalysis = (analysis?.distractor_analysis || {}) as Record<string, DistractorItem>;
   const solvingStrategy = (analysis?.solving_strategy || {}) as SolvingStrategy;
   const evidence = (analysis?.evidence || {}) as EvidenceInfo;
 
@@ -54,7 +52,7 @@ export const Part5PracticeCard: React.FC<Part5PracticeCardProps> = ({
       <CardHeader className="bg-muted/30 border-b border-border/40 py-3.5 px-4 sm:px-6">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
-              <span className="flex h-7 px-2 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
+            <span className="flex h-7 px-2 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
               Câu {index + 1}
             </span>
             <Part5TypeBadge type={analysis?.question_type} />
@@ -106,33 +104,49 @@ export const Part5PracticeCard: React.FC<Part5PracticeCardProps> = ({
             }
 
             return (
-              <button
-                key={ans.id}
-                type="button"
-                onClick={() => {
-                  if (phase === 'PRACTICE') {
-                    onSelectAnswer(question.id, ans.id, ans.is_correct);
-                  }
-                }}
-                disabled={phase === 'SUBMITTED'}
-                className={`relative flex items-center gap-3 rounded-xl border p-3 text-left transition-all cursor-pointer disabled:cursor-default ${optionStyle}`}
-              >
-                <div
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-xs font-bold transition-colors ${badgeStyle}`}
-                >
-                  {letter}
-                </div>
-                <span className="text-sm font-medium flex-grow leading-snug">
-                  {ans.answers_text}
-                </span>
 
-                {phase === 'SUBMITTED' && isCorrect && (
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <div className='flex flex-col'>
+                <button
+                  key={ans.id}
+                  type="button"
+                  onClick={() => {
+                    if (phase === 'PRACTICE') {
+                      onSelectAnswer(question.id, ans.id, ans.is_correct);
+                    }
+                  }}
+                  disabled={phase === 'SUBMITTED'}
+                  className={`relative flex flex-col items-stretch rounded-xl border p-3 text-left transition-all cursor-pointer disabled:cursor-default ${optionStyle}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-xs font-bold transition-colors ${badgeStyle}`}
+                    >
+                      {letter}
+                    </div>
+                    <span className="text-base font-medium flex-grow leading-snug">
+                      {ans.answers_text}
+                    </span>
+
+                    {phase === 'SUBMITTED' && isCorrect && (
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                    )}
+                    {phase === 'SUBMITTED' && isSelected && !isCorrect && (
+                      <XCircle className="h-4 w-4 text-rose-600 dark:text-rose-400 shrink-0" />
+                    )}
+                  </div>
+                </button>
+                {/* Explanation hiển thị ngay dưới câu trả lời khi đã SUBMITTED */}
+                {phase === 'SUBMITTED' && ans.explanation && (
+                  <div
+                    className={` pt-4  pl-4 text-xs leading-relaxed ${isCorrect
+                      ? 'text-emerald-700 dark:text-emerald-400 font-medium'
+                      : 'text-rose-600 dark:text-rose-400'
+                      }`}
+                  >
+                    {ans.explanation}
+                  </div>
                 )}
-                {phase === 'SUBMITTED' && isSelected && !isCorrect && (
-                  <XCircle className="h-4 w-4 text-rose-600 dark:text-rose-400 shrink-0" />
-                )}
-              </button>
+              </div>
             );
           })}
         </div>
@@ -152,8 +166,8 @@ export const Part5PracticeCard: React.FC<Part5PracticeCardProps> = ({
                   ? 'Ẩn chiến lược giải'
                   : 'Xem chiến lược giải & Điểm ngữ pháp'
                 : isExplanationOpen
-                ? 'Ẩn lời giải chi tiết'
-                : 'Xem giải thích chi tiết & Chiến lược'}
+                  ? 'Ẩn giải thích chi tiết & Bản dịch'
+                  : 'Xem giải thích chi tiết & Bản dịch'}
               {isExplanationOpen ? (
                 <ChevronUp className="h-3.5 w-3.5 ml-0.5" />
               ) : (
@@ -166,87 +180,63 @@ export const Part5PracticeCard: React.FC<Part5PracticeCardProps> = ({
         {/* Khối phân tích chi tiết (Được mở rộng khi toggle) */}
         {analysis && isExplanationOpen && (
           <div className="mt-4 rounded-xl border border-primary/20 bg-muted/30 p-4 sm:p-5 space-y-4 text-sm animate-in fade-in-50 duration-200">
-            {/* Phase 2: Hiển thị Explanation và Distractor */}
-            {phase === 'SUBMITTED' && (
-              <>
-                {/* 1. Lời giải chi tiết */}
-                <div>
-                  <div className="flex items-center gap-1.5 font-semibold text-primary mb-1.5">
-                    <BookOpen className="h-4 w-4" />
-                    <span>Giải thích đáp án</span>
-                  </div>
-                  <p className="text-foreground/90 leading-relaxed bg-background/80 p-3 rounded-lg border border-border/50 text-xs sm:text-sm">
-                    {analysis.explanation}
-                  </p>
+            {/* Phase 2: Hiển thị Bản dịch câu hỏi */}
+            {phase === 'SUBMITTED' && analysis.translation && (
+              <div>
+                <div className="flex items-center gap-1.5 font-semibold text-primary mb-1.5">
+                  <Languages className="h-4 w-4" />
+                  <span>Dịch câu hỏi</span>
                 </div>
-
-                {/* 2. Distractor analysis (Vì sao các phương án khác sai) */}
-                {Object.keys(distractorAnalysis).length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-1.5 font-semibold text-foreground mb-2">
-                      <AlertCircle className="h-4 w-4 text-amber-500" />
-                      <span>Tại sao các lựa chọn khác sai?</span>
-                    </div>
-                    <div className="space-y-1.5">
-                      {Object.entries(distractorAnalysis).map(([optKey, optVal]) => (
-                        <div
-                          key={optKey}
-                          className="flex items-start gap-2 bg-background/70 px-3 py-2 rounded-lg border border-border/40 text-xs text-muted-foreground"
-                        >
-                          <span className="font-bold text-foreground shrink-0">({optKey}):</span>
-                          <span>{optVal?.reason || 'Không phù hợp ngữ cảnh'}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </>
+                <p className="text-foreground/90 leading-relaxed bg-background/80 p-3 rounded-lg border border-border/50 text-xs sm:text-sm">
+                  {analysis.translation}
+                </p>
+              </div>
             )}
 
             {/* Cả Phase 1 & Phase 2: Hiển thị Solving Strategy (Chiến lược & Ngữ pháp) */}
             {(solvingStrategy.step_by_step?.length ||
               solvingStrategy.grammar_points?.length ||
               solvingStrategy.key_takeaway) && (
-              <div className="space-y-2.5 pt-1">
-                <div className="font-semibold text-foreground flex items-center gap-1.5 text-xs sm:text-sm">
-                  <Lightbulb className="h-4 w-4 text-amber-500" />
-                  <span>Chiến lược làm bài & Điểm ngữ pháp</span>
-                </div>
-
-                {solvingStrategy.step_by_step && solvingStrategy.step_by_step.length > 0 && (
-                  <div className="space-y-1">
-                    <span className="text-xs font-semibold text-muted-foreground">Các bước tiếp cận:</span>
-                    <ul className="list-disc list-inside space-y-1 pl-1 text-xs text-foreground/90">
-                      {solvingStrategy.step_by_step.map((step, idx) => (
-                        <li key={idx}>{step}</li>
-                      ))}
-                    </ul>
+                <div className="space-y-2.5 pt-1">
+                  <div className="font-semibold text-foreground flex items-center gap-1.5 text-xs sm:text-sm">
+                    <Lightbulb className="h-4 w-4 text-amber-500" />
+                    <span>Chiến lược làm bài & Điểm ngữ pháp</span>
                   </div>
-                )}
 
-                {solvingStrategy.grammar_points && solvingStrategy.grammar_points.length > 0 && (
-                  <div className="space-y-1">
-                    <span className="text-xs font-semibold text-muted-foreground">Ngữ pháp trọng tâm:</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {solvingStrategy.grammar_points.map((pt, idx) => (
-                        <span
-                          key={idx}
-                          className="bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded text-xs"
-                        >
-                          {pt}
-                        </span>
-                      ))}
+                  {solvingStrategy.step_by_step && solvingStrategy.step_by_step.length > 0 && (
+                    <div className="space-y-1">
+                      <span className="text-xs font-semibold text-muted-foreground">Các bước tiếp cận:</span>
+                      <ul className="list-disc list-inside space-y-1 pl-1 text-xs text-foreground/90">
+                        {solvingStrategy.step_by_step.map((step, idx) => (
+                          <li key={idx}>{step}</li>
+                        ))}
+                      </ul>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {solvingStrategy.key_takeaway && (
-                  <div className="bg-amber-500/10 border border-amber-500/20 text-amber-900 dark:text-amber-200 p-2.5 rounded-lg text-xs font-medium">
-                    💡 <strong className="font-semibold">Ghi nhớ:</strong> {solvingStrategy.key_takeaway}
-                  </div>
-                )}
-              </div>
-            )}
+                  {solvingStrategy.grammar_points && solvingStrategy.grammar_points.length > 0 && (
+                    <div className="space-y-1">
+                      <span className="text-xs font-semibold text-muted-foreground">Ngữ pháp trọng tâm:</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {solvingStrategy.grammar_points.map((pt, idx) => (
+                          <span
+                            key={idx}
+                            className="bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded text-xs"
+                          >
+                            {pt}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {solvingStrategy.key_takeaway && (
+                    <div className="bg-amber-500/10 border border-amber-500/20 text-amber-900 dark:text-amber-200 p-2.5 rounded-lg text-xs font-medium">
+                      💡 <strong className="font-semibold">Ghi nhớ:</strong> {solvingStrategy.key_takeaway}
+                    </div>
+                  )}
+                </div>
+              )}
 
             {/* Evidence clue nếu có */}
             {phase === 'SUBMITTED' && evidence?.clue && (

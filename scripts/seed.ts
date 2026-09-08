@@ -6,21 +6,19 @@ import * as fs from 'fs';
 import { prisma } from '../lib/prisma';
 import { QuestionType, ReadingSkill, Prisma } from '@prisma/client';
 
-interface RawOptionMap {
-  [key: string]: string;
+interface RawOptionItem {
+  text: string;
+  explanation?: string;
 }
 
-interface RawDistractorAnalysis {
-  [key: string]: {
-    reason: string;
-  };
+interface RawOptionMap {
+  [key: string]: string | RawOptionItem;
 }
 
 interface RawQuestionAnalysis {
   question_type: string;
   skill?: string | null;
-  explanation: string;
-  distractor_analysis: RawDistractorAnalysis;
+  translation?: string | null;
   evidence?: {
     quote?: string;
     location?: string;
@@ -94,6 +92,20 @@ const OPTION_LETTER_TO_NUMBER: { [key: string]: number } = {
   D: 4,
 };
 
+function parseAnswers(options: RawOptionMap, correctAnswer: string) {
+  return Object.entries(options || {}).map(([optLetter, optVal]) => {
+    const text = typeof optVal === 'string' ? optVal : optVal?.text || '';
+    const explanation = typeof optVal === 'string' ? null : optVal?.explanation || null;
+    const isCorrect = optLetter.toUpperCase() === (correctAnswer || '').toUpperCase();
+    return {
+      answer_number: OPTION_LETTER_TO_NUMBER[optLetter.toUpperCase()] || 0,
+      answers_text: text,
+      is_correct: isCorrect,
+      explanation: explanation,
+    };
+  });
+}
+
 function parseQuestionType(val?: string): QuestionType {
   if (!val) return QuestionType.VOCABULARY;
   if (Object.values(QuestionType).includes(val as QuestionType)) {
@@ -145,11 +157,7 @@ async function seedTest01() {
               question_number: q.question_number,
               question_text: q.question_text || null,
               answers: {
-                create: Object.entries(q.options || {}).map(([optLetter, optText]) => ({
-                  answer_number: OPTION_LETTER_TO_NUMBER[optLetter.toUpperCase()] || 0,
-                  answers_text: optText,
-                  is_correct: optLetter.toUpperCase() === (q.correct_answer || '').toUpperCase(),
-                })),
+                create: parseAnswers(q.options, q.correct_answer),
               },
               ...(q.question_analysis
                 ? {
@@ -157,8 +165,7 @@ async function seedTest01() {
                       create: {
                         question_type: parseQuestionType(q.question_analysis.question_type),
                         skill: parseReadingSkill(q.question_analysis.skill),
-                        explanation: q.question_analysis.explanation,
-                        distractor_analysis: q.question_analysis.distractor_analysis as unknown as Prisma.InputJsonValue,
+                        translation: q.question_analysis.translation || null,
                         evidence: (q.question_analysis.evidence || {}) as unknown as Prisma.InputJsonValue,
                         solving_strategy: q.question_analysis.solving_strategy as unknown as Prisma.InputJsonValue,
                       },
@@ -217,11 +224,7 @@ async function seedTest01() {
               question_number: q.question_number,
               question_text: q.question_text || null,
               answers: {
-                create: Object.entries(q.options || {}).map(([optLetter, optText]) => ({
-                  answer_number: OPTION_LETTER_TO_NUMBER[optLetter.toUpperCase()] || 0,
-                  answers_text: optText,
-                  is_correct: optLetter.toUpperCase() === (q.correct_answer || '').toUpperCase(),
-                })),
+                create: parseAnswers(q.options, q.correct_answer),
               },
               ...(q.question_analysis
                 ? {
@@ -229,8 +232,7 @@ async function seedTest01() {
                       create: {
                         question_type: parseQuestionType(q.question_analysis.question_type),
                         skill: parseReadingSkill(q.question_analysis.skill),
-                        explanation: q.question_analysis.explanation,
-                        distractor_analysis: q.question_analysis.distractor_analysis as unknown as Prisma.InputJsonValue,
+                        translation: q.question_analysis.translation || null,
                         evidence: (q.question_analysis.evidence || {}) as unknown as Prisma.InputJsonValue,
                         solving_strategy: q.question_analysis.solving_strategy as unknown as Prisma.InputJsonValue,
                       },
@@ -291,11 +293,7 @@ async function seedTest01() {
               question_number: q.question_number,
               question_text: q.question_text || null,
               answers: {
-                create: Object.entries(q.options || {}).map(([optLetter, optText]) => ({
-                  answer_number: OPTION_LETTER_TO_NUMBER[optLetter.toUpperCase()] || 0,
-                  answers_text: optText,
-                  is_correct: optLetter.toUpperCase() === (q.correct_answer || '').toUpperCase(),
-                })),
+                create: parseAnswers(q.options, q.correct_answer),
               },
               ...(q.question_analysis
                 ? {
@@ -303,8 +301,7 @@ async function seedTest01() {
                       create: {
                         question_type: parseQuestionType(q.question_analysis.question_type),
                         skill: parseReadingSkill(q.question_analysis.skill),
-                        explanation: q.question_analysis.explanation,
-                        distractor_analysis: q.question_analysis.distractor_analysis as unknown as Prisma.InputJsonValue,
+                        translation: q.question_analysis.translation || null,
                         evidence: (q.question_analysis.evidence || {}) as unknown as Prisma.InputJsonValue,
                         solving_strategy: q.question_analysis.solving_strategy as unknown as Prisma.InputJsonValue,
                       },

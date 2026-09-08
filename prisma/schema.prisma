@@ -97,6 +97,7 @@ model Answer {
   answer_number Int
   answers_text String?
   is_correct Boolean
+  explanation String? // Lời giải thích riêng cho phương án này (dù đúng hay sai)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -128,9 +129,8 @@ model QuestionAnalysis {
   question_type        QuestionType
   skill                ReadingSkill?
 
-  // Explanation
-  explanation          String // Giải thích
-  distractor_analysis  Json // Giải thích các đáp án sai
+  // Translation & Evidence
+  translation          String? // Bản dịch tiếng Việt của câu hỏi / câu bài tập
   evidence             Json? // Bằng chứng trong bài
 
   // Coaching

@@ -88,3 +88,32 @@ export interface SubmitAttemptItem {
 export interface SubmitPart5Payload {
   items: SubmitAttemptItem[];
 }
+
+export type Part6StatusFilter = 'ALL' | 'UNANSWERED' | 'ANSWERED';
+
+export interface Part6PassageStatItem {
+  id: number;
+  topic?: string | null;
+  mainIdea?: string | null;
+  questionNumbers: number[];
+  isAnswered: boolean;
+  totalQuestions: number;
+  answeredQuestions: number;
+  correctQuestions: number;
+}
+
+export interface Part6StatsDetail {
+  totalPassages: number;
+  answeredPassages: number;
+  totalQuestions: number;
+  answeredQuestions: number;
+  correctQuestions: number;
+  accuracy: number;
+  passages: Part6PassageStatItem[];
+  byType: Record<string, TypeStatDetail>;
+}
+
+export interface SubmitPart6Payload {
+  passageId: number;
+  items: SubmitAttemptItem[];
+}

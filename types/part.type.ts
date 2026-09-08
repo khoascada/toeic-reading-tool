@@ -117,3 +117,32 @@ export interface SubmitPart6Payload {
   passageId: number;
   items: SubmitAttemptItem[];
 }
+
+export type Part7StatusFilter = 'ALL' | 'UNANSWERED' | 'ANSWERED';
+
+export interface Part7PassageStatItem {
+  id: number;
+  topic?: string | null;
+  mainIdea?: string | null;
+  questionNumbers: number[];
+  isAnswered: boolean;
+  totalQuestions: number;
+  answeredQuestions: number;
+  correctQuestions: number;
+}
+
+export interface Part7StatsDetail {
+  totalPassages: number;
+  answeredPassages: number;
+  totalQuestions: number;
+  answeredQuestions: number;
+  correctQuestions: number;
+  accuracy: number;
+  passages: Part7PassageStatItem[];
+  byType: Record<string, TypeStatDetail>;
+}
+
+export interface SubmitPart7Payload {
+  passageId: number;
+  items: SubmitAttemptItem[];
+}

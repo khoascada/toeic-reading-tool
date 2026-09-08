@@ -1,27 +1,25 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import { Card, CardContent, CardHeader } from '@components/ui/card';
 import { Badge } from '@components/ui/badge';
 import { BookOpen } from 'lucide-react';
 import type { ReadingPassageItem } from '../types';
 
-interface Part6PassageCardProps {
+interface Part7PassageCardProps {
   passage: ReadingPassageItem;
   selectedAnswers?: Record<number, number>;
 }
 
-export const Part6PassageCard: React.FC<Part6PassageCardProps> = ({
+export const Part7PassageCard: React.FC<Part7PassageCardProps> = ({
   passage,
 }) => {
   const text = passage.passage_text || '';
   const paragraphs = text.split('\n').filter(Boolean);
 
-  // Render text with highlighted blanks like [131], [132], [133], [134]
+  // Render text with highlighted blanks like [147], [148], etc.
   const renderParagraphWithBlanks = (paraText: string, pIdx: number) => {
-    // Regex matching patterns like [131], [132], etc.
     const parts = paraText.split(/(\[\d{3}\])/g);
-
 
     return (
       <p key={pIdx} className="leading-relaxed text-sm sm:text-base text-foreground/90 font-normal">

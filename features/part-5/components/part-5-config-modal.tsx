@@ -46,7 +46,6 @@ export const Part5ConfigModal: React.FC<Part5ConfigModalProps> = ({
     status,
     questionType,
   });
-  console.log("🚀 ~ Part5ConfigModal ~ countData:", countData)
 
   const maxAvailable = countData?.count ?? 0;
 

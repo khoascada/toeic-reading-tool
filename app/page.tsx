@@ -5,22 +5,22 @@ import Link from 'next/link';
 export default function HomePage() {
   const quickActions = [
     {
-      title: 'Luyện đọc theo Passage',
-      description: 'Luyện tập các đoạn văn Part 6 & Part 7 kèm phân tích câu hỏi chi tiết từ AI',
+      title: 'Part 6: Hoàn thành đoạn văn',
+      description: 'Luyện tập điền từ vào chỗ trống trong đoạn văn (Text Completion). Câu 131–146.',
       icon: <BookOpen className="text-primary h-6 w-6" />,
-      href: '/passages',
+      href: '/part-6',
+    },
+    {
+      title: 'Part 7: Đọc hiểu đoạn văn',
+      description: 'Luyện tập đọc hiểu đoạn đơn và đoạn đôi kèm AI phân tích chiến lược. Câu 147–200.',
+      icon: <BookMarked className="text-primary h-6 w-6" />,
+      href: '/part-7',
     },
     {
       title: 'Làm đề thi trọn vẹn',
       description: 'Thi thử các bộ đề ETS 2023 Reading với chấm điểm và giải thích',
       icon: <Library className="text-primary h-6 w-6" />,
       href: '/tests',
-    },
-    {
-      title: 'Sổ từ vựng & Phân tích từ',
-      description: 'Tra cứu từ vựng quan trọng, từ đồng nghĩa, collocations rút ra từ bài đọc',
-      icon: <BookMarked className="text-primary h-6 w-6" />,
-      href: '/vocabulary',
     },
     {
       title: 'Lịch sử & Phân tích điểm yếu',
